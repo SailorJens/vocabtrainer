@@ -1,3 +1,10 @@
-body {
-    background-color: powderblue;
+html {
+    background-color: linen;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
 }
+
+body {
+    padding-left: 1em
+}
+
