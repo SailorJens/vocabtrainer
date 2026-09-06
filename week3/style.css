@@ -8,3 +8,35 @@ body {
     padding-left: 1em
 }
 
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    padding: 2px;
+    padding-left:5px;
+    padding-right: 5px;
+    
+}
+
+.mode-selection {
+       display: inline-flex;
+       gap: 1rem;
+}
+
+
+.m-answer-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
