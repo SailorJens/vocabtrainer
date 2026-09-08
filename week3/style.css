@@ -5,27 +5,42 @@
 */
 * {
     box-sizing: border-box;
-    border-width: 1px;
+   
+    
+}
+
+html {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    background-color: azure;
 }
 
 body {
-    font: inherit;
+    
+    max-width: 30rem;
+    margin-inline: auto;
+    background-color: lavenderblush;
+    padding: 1rem;
 }
 
 header {
-    font: inherit;
+    background-color: cornsilk;
+    margin-block-end: 2rem;
+    outline: 1px solid red;
 }
 
 main {
-    font: inherit;
+    
+    outline: 1px solid blue;
 }
 
 footer {
-    font: inherit;
+    margin-block-start: 2rem;
+    outline: 1px solid green;
 }
 
 section {
-    font: inherit;
+    background-color:palegreen;
 }
 
 form {
@@ -33,7 +48,16 @@ form {
 }
 
 label {
-    font: inherit;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.6rem 1rem;
+    margin-block: 0.4rem;
+
+    border: 1px solid burlywood;
+    border-radius: 0.5rem;
 }
 
 input {
@@ -53,11 +77,14 @@ legend {
 }
 
 h1 {
-    font: inherit;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    background-color:chartreuse;
 }
 
 p {
-    font: inherit;
+    
 }
 
 
