@@ -19,15 +19,15 @@
     <body>
         <header>
             <h1>Vocabulary Trainer</h1>
-            <p>Learn a few new words every day.</p>
+            <small>Learn a few new words every day.</small>
         </header>
 
         <main>
             <!-- Show greeting when a user is new -->
             <section id="greeting-first">
                 <form>
-                    <p>Welcome to the vocabulary trainer!</p>
-                    <label>What's your name?
+                    <p class="welcome">Welcome to the vocabulary trainer!</p>
+                    <label class="ask_name">What's your name?
                         <input id="user-name" type="text" />
                     </label>
                     <button type="submit" id="user-name-submit">Enter!</button>
@@ -83,7 +83,7 @@
             
             <!-- Multiple Choice -->
             <section>
-                <p>Dies ist der deutsche Satz, den der Lerner bestimmen muss. Er kann auch länger sein.</p>
+                <p>This will be the German sentence the learner will have to guess the Turkish equivalent for.</p>
                 <form id="m-answer-form">
                     <label class="radio-option">
                         <input type="radio" name="m-answer" id="m-answer-1" value="m-answer-1" />
@@ -109,16 +109,21 @@
             
             <!-- Fill in the blank -->
             <section>
-                <p>Deutscher Satz</p>
-
-                
+                <p>This will be the German sentence for which the user has to fill the gap in the Turkish sentence.</p>
+                <form id="f-answer-form">
+                    <p class="fill_blank">
+                        Ich
+                        <input type="text" id="answer" aria-label="Missing word">
+                        gestern nach Hause gegangen. Und ich muss das auch ein bisschen länger machen.
+                    </p>
+                </form>
             </section>
 
 
         </main>
 
         <footer>
-            <p>&copy; 2026 Vocabulary Trainer</p>
+            <small>&copy; 2026 Vocabulary Trainer</small>
         </footer>
 
     </body>

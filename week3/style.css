@@ -5,59 +5,53 @@
 */
 * {
     box-sizing: border-box;
-   
-    
 }
 
+/* setting a default font style.
+ Also, a colour for the screen outside my actual page, 
+ as I want to control the "work area" properly, and not use all avilable width as 
+ I don't have so much content. 
+*/
 html {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 16px;
-    background-color: azure;
+    background-color: #f0f0f0;
 }
 
+/*
+This defines my actual content area
+rem uses a size relative to the font size (set in html)
+max-width means that the pane cannot be wider, but it can be smaller if the windwo is smaller. 
+margin-inline: auto means: Inline refers to left/right for normal pages as that is the main inline direction
+(vs. block, which usually means top/bottom as it is vertical to the inline direction. )
+The auto means that any available additional space is used equally on both sides. If ensures my content is centered on the page.
+*/
 body {
-    
     max-width: 30rem;
     margin-inline: auto;
-    background-color: lavenderblush;
+    background-color: azure;
     padding: 1rem;
 }
 
+/*
+block is the dirction vertical to inline, which by default is left to right. So this is a margin at the bottom.
+*/
 header {
-    background-color: cornsilk;
     margin-block-end: 2rem;
-    outline: 1px solid red;
 }
 
-main {
-    
-    outline: 1px solid blue;
-}
 
 footer {
     margin-block-start: 2rem;
-    outline: 1px solid green;
+  
 }
 
 section {
-    background-color:palegreen;
+   margin-block-start: 2rem;
 }
 
 form {
     font: inherit;
-}
-
-label {
-
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    padding: 0.6rem 1rem;
-    margin-block: 0.4rem;
-
-    border: 1px solid burlywood;
-    border-radius: 0.5rem;
 }
 
 input {
@@ -68,24 +62,60 @@ button {
     font: inherit;
 }
 
-fieldset {
-    font: inherit;
-}
-
 legend {
     font: inherit;
 }
 
+/* I remove the default bottom margin
+    so that the subtitle is closer to the headline.
+*/
 h1 {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 2rem;
     font-weight: 700;
-    background-color:chartreuse;
-}
-
-p {
-    
+    margin-block-end: 0;
 }
 
 
+small {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #b0b0b0;
+}
 
+/*
+    I put the answer text into the label element. 
+    I am styling them as flex containers, which means that with they act as inline element, 
+    causing the radio button to appear in front of the text, 
+    while externally it is treated as a block container, meaning it gets stacked vertically.
+    The alignment is about setting the radio button and the answer text on one line, based on the center.
+    As the internal direction of the flex container is the row, align applies to centering the containing
+    elements (input, text) vertically.
+    gap is the space between the elements within the label container (input, text)
+*/
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.6rem 1rem;
+    margin-block: 0.4rem;
+
+}
+
+.welcome {
+    font-style: italic;
+}
+
+.fill_blank {
+    align-items: center;
+    gap:1rem;
+}
+
+/* Add some space around the input box 
+I can't use gap and a flex box here, 
+because then the second part of the sentence would not wrap to the beginning of the next line.
+So I need to keep the content inline, and format the input box separately.
+*/
+.fill_blank input {
+    margin-inline: 0.4rem;
+}
