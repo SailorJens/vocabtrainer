@@ -28,7 +28,6 @@ The auto means that any available additional space is used equally on both sides
 */
 body {
    background-color:floralwhite;
-   margin-inline: auto;
    margin-block: 0; 
 }
 
@@ -77,6 +76,7 @@ small {
     color: #b0b0b0;
 }
 
+
 /*
     I put the answer text into the label element. 
     I am styling them as flex containers, which means that with they act as inline element, 
@@ -116,6 +116,7 @@ So I need to keep the content inline, and format the input box separately.
 }
 
 .answer_submit {
+    display: block;
     margin-inline-start: auto
 }
 
