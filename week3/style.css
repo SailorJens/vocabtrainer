@@ -115,6 +115,7 @@ So I need to keep the content inline, and format the input box separately.
     margin-inline: 0.4rem;
 }
 
+/* buttons should sit on the right hand side */
 .answer_submit {
     display: block;
     margin-inline-start: auto
