@@ -119,3 +119,7 @@ So I need to keep the content inline, and format the input box separately.
 .fill_blank input {
     margin-inline: 0.4rem;
 }
+
+.answer_submit {
+    margin-inline-start: auto
+}
