@@ -1,0 +1,128 @@
+/*  Generally I want to define the box sizes, not the content 
+    so I have better control over the layout.
+    That means that the size of the box includes the border width and the padding
+    (but not the margin)
+*/
+* {
+    box-sizing: border-box;
+}
+
+/* setting a default font style.
+ Also, a colour for the screen outside my actual page, 
+ as I want to control the "work area" properly, and not use all avilable width as 
+ I don't have so much content. 
+*/
+html {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    background-color: #f0f0f0;
+}
+
+/*
+This defines my actual content area
+rem uses a size relative to the font size (set in html)
+max-width means that the pane cannot be wider, but it can be smaller if the windwo is smaller. 
+margin-inline: auto means: Inline refers to left/right for normal pages as that is the main inline direction
+(vs. block, which usually means top/bottom as it is vertical to the inline direction. )
+The auto means that any available additional space is used equally on both sides. If ensures my content is centered on the page.
+*/
+body {
+   background-color:floralwhite;
+   margin-block: 0; 
+}
+
+/*
+block is the dirction vertical to inline, which by default is left to right. So this is a margin at the bottom.
+*/
+header {
+    margin-block-start: 0;
+    margin-block-end: 2rem;
+}
+
+#header-content,
+main, footer {
+    max-width: 30rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+}
+
+footer {
+    margin-block-start: 2rem;
+    padding-block-end: 1rem;
+    
+  
+}
+
+section {
+    
+   margin-block-start: 2rem;
+}
+
+
+
+/* I remove the default bottom margin
+    so that the subtitle is closer to the headline.
+*/
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-block: 0;
+}
+
+
+small {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #b0b0b0;
+}
+
+
+/*
+    I put the answer text into the label element. 
+    I am styling them as flex containers, which means that with they act as inline element, 
+    causing the radio button to appear in front of the text, 
+    while externally it is treated as a block container, meaning it gets stacked vertically.
+    The alignment is about setting the radio button and the answer text on one line, based on the center.
+    As the internal direction of the flex container is the row, align applies to centering the containing
+    elements (input, text) vertically.
+    gap is the space between the elements within the label container (input, text)
+*/
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.6rem 1rem;
+    margin-block: 0.4rem;
+
+}
+
+.welcome {
+    font-style: italic;
+}
+
+.fill_blank {
+    align-items: center;
+    gap:1rem;
+}
+
+/* Add some space around the input box 
+I can't use gap and a flex box here, 
+because then the second part of the sentence would not wrap to the beginning of the next line.
+So I need to keep the content inline, and format the input box separately.
+*/
+.fill_blank input {
+    margin-inline: 0.4rem;
+}
+
+/* buttons should sit on the right hand side */
+.answer_submit {
+    display: block;
+    margin-inline-start: auto
+}
+
+#header-content {
+    padding-block: 1rem;
+    background-color:darkred;
+    color: floralwhite;
+}
