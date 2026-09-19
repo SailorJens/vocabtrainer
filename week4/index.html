@@ -14,6 +14,9 @@
         <!-- External stylesheet -->
         <link rel="stylesheet" href="style.css">
 
+        <!-- Load the script, but only execute once the html is loaded (defer) -->
+        <script src="script.js" defer></script>
+
     </head>
 
     <body>
@@ -27,12 +30,13 @@
         <main>
             <!-- Show greeting when a user is new -->
             <section id="greeting-first">
-                <form>
+                <form id="user-name-form">
                     <p class="welcome">Welcome to the vocabulary trainer!</p>
                     <label class="ask_name">What's your name?
-                        <input id="user-name" type="text" />
+                        <input id="user-name" type="text" required />
                     </label>
-                    <button type="submit" id="user-name-submit">Enter!</button>
+                    
+                    <button type="submit">Let's go!</button>
                 </form>
             </section>
 
@@ -43,7 +47,7 @@
 
             <!-- Select the unit/lesson -->
             <!-- As I use JS to evaluate, I do not need a "name" attribute. -->  
-            <section>
+            <section id="unit-section">
                 <label for="unit-selector">You are currently learning unit</label>
 
                 <select id="unit-selector">
@@ -64,7 +68,7 @@
             </section>
 
             <!-- Select the learning method -->
-            <section>
+            <section id="mode-section">
                 <fieldset class="mode-selection">
                     <legend>Exercise mode</legend>
 
@@ -84,7 +88,7 @@
             </section>
             
             <!-- Multiple Choice -->
-            <section>
+            <section id="multiple-choice-section">
                 <p>This will be the German sentence the learner will have to guess the Turkish equivalent for.</p>
                 <form id="m-answer-form">
                     <label class="radio-option">
@@ -110,7 +114,7 @@
             </section>
             
             <!-- Fill in the blank -->
-            <section>
+            <section id="fill-blank-section">
                 <p>This will be the German sentence for which the user has to fill the gap in the Turkish sentence.</p>
                 <form id="f-answer-form">
                     <p class="fill_blank">
