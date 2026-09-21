@@ -109,7 +109,9 @@ function startNewUser() {
 
 function showModeSelection() {
     secGreetingFirst.style.display = "none";
-    secGreetingReturning.style.display = ""
+    secGreetingReturning.style.display = "";
+    secUnit.style.display = "";
+    secMode.style.display = "";
     secMultipleChoice.style.display = "none";
     secFillBlank.style.display = "none";
 }
