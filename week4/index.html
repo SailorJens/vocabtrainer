@@ -115,14 +115,14 @@
             
             <!-- Fill in the blank -->
             <section id="fill-blank-section">
-                <p>This will be the German sentence for which the user has to fill the gap in the Turkish sentence.</p>
+                <p id="fb_german">This will be the German sentence for which the user has to fill the gap in the Turkish sentence.</p>
                 <form id="f-answer-form">
                     <p class="fill_blank">
-                        Ich
-                        <input type="text" id="answer" aria-label="Missing word">
-                        gestern nach Hause gegangen. Und ich muss das auch ein bisschen länger machen.
+                        <span id="fb_before">ich</span>
+                        <input type="text" id="fb_answer" aria-label="Missing word">
+                        <span id="fb_after">gestern nach Hause gegangen. Und ich muss das auch ein bisschen länger machen.</span>
                     </p>
-                    <button class="answer_submit" type="submit" id="fb-submit">Enter!</button>
+                    <button class="answer_submit" type="submit">Submit answer</button>
                 </form>
             </section>
 

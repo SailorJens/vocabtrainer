@@ -24,6 +24,14 @@ const selUnit = document.getElementById("unit-selector");
 // so this would be an array of two elements, hence i will need to loop through them
 const rbsMode = document.querySelectorAll('input[name="mode"]');
 
+const formFB = document.getElementById("f-answer-form");
+const pFBGerman = document.getElementById("fb_german");
+const spanFBBefore = document.getElementById("fb_before");
+const spanFBAfter = document.getElementById("fb_after");
+const inpFBAnswer = document.getElementById("fb_answer");
+
+const formMC = document.getElementById("m-answer-form");
+
 // the user's data
 let user = null;
 
@@ -92,6 +100,8 @@ function startNewUser() {
     // when a name is submitted, initialise the user
     // this catches the button submit event
     formName.addEventListener("submit", createNewUser);
+    // put cursor in the box for better UX
+    inpName.focus();
 }
 
 function showModeSelection() {
@@ -109,29 +119,72 @@ function setCurrentUnit() {
     selUnit.value = user.unit;
 }
 
+function unitChanged() {
+    user.unit = selUnit.value;
+    saveUser();
+}
+
+function modeChanged(event) {
+    const mode = event.target.value;
+
+    if (mode === "fill-in-the-blank") {
+        startFillBlank();
+    } else {
+        startMultipleChoice()
+    }
+}
 
 function startReturningUser() {
-    console.log("Returning User");
+    
     showModeSelection()
     setUserName();
     setCurrentUnit();
 
+    // set up event listeners 
+    selUnit.addEventListener("change", unitChanged)
+    rbsMode.forEach(button => {
+        button.addEventListener("change", modeChanged)
+    });
+    formFB.addEventListener("submit", fbAnswerSubmitted);
+
+   
+
+
+}
+
+function startFillBlank() {
+    console.log("startFillBlank")
+
+    // show correct form
+    secMultipleChoice.style.display = "none";
+    secFillBlank.style.display = "";
+
+    // load sentence
+    card = {
+        id : 1,
+        german : "Gibt es im Klassenzimmer Stühle?",
+        turkish : "Sınıfta sandalyeler var mı?",
+        turkish_blank :  "Sınıfta {{sandalyeler}} var mı?"
+    }
+    // display sentence
+    pFBGerman.innerHTML = card.german;
+    spanFBBefore.innerHTML = card.turkish_blank.split("{{")[0];
+    spanFBAfter.innerHTML = card.turkish_blank.split("}}")[1];
+    // set cursor in answer field
+    inpFBAnswer.focus();
+
+}
+
+function fbAnswerSubmitted() {
 
 }
 
 
-// // save the name to the browser storage (localStorage)
-// document.querySelector("#user-name-form").addEventListener("submit", event => {
-//     // Prevent a page reload as is the default with submit buttons
-//     event.preventDefault();
+function startMultipleChoice() {
+    console.log("startMultipleChoice")
+    secMultipleChoice.style.display = "";
+    secFillBlank.style.display = "none";
 
-//     // get the user name field value. Note that nameInput is a global variable, hence I can't / don't need to declare it in the function
-//     const name = nameInput.value.trim();
-//     localStorage.setItem("userName", name);
-
-//     document.getElementById("greeting-first").style.display = "none";
-//     document.getElementById("msg-returning-user").innerHTML = "Welcome to the vocabulary trainer, " + name + "!"
-//     document.getElementById("greeting-returning").style.display = "";
-
-//     // save/use the name (later ####)
-// });
+    // load sentence
+    // display sentence
+}
