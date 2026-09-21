@@ -78,6 +78,7 @@ function validateName() {
 function createNewUser(event) {
     //don't reload the page
     event.preventDefault();
+    inpName.blur();
 
     // retrieve the name
     const name = inpName.value.trim();
@@ -179,6 +180,7 @@ function startFillBlank() {
 
 function fbAnswerSubmitted(event) {
     event.preventDefault()
+    inpFBAnswer.blur();
 }
 
 

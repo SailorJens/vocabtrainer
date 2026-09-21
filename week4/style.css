@@ -58,11 +58,6 @@ section {
    margin-block-start: 2rem;
 }
 
-input {
-    /* keep the original font size on the phone so it doesn't zoom in */
-    font-size: 1rem;
-}
-
 
 /* I remove the default bottom margin
     so that the subtitle is closer to the headline.
