@@ -75,7 +75,10 @@ function validateName() {
     }
 }
 
-function createNewUser() {
+function createNewUser(event) {
+    //don't reload the page
+    event.preventDefault();
+
     // retrieve the name
     const name = inpName.value.trim();
     // initialise the user 
@@ -147,9 +150,6 @@ function startReturningUser() {
     });
     formFB.addEventListener("submit", fbAnswerSubmitted);
 
-   
-
-
 }
 
 function startFillBlank() {
@@ -175,8 +175,8 @@ function startFillBlank() {
 
 }
 
-function fbAnswerSubmitted() {
-
+function fbAnswerSubmitted(event) {
+    event.preventDefault()
 }
 
 
