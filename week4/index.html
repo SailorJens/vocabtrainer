@@ -122,8 +122,15 @@
                         <input type="text" id="fb_answer" aria-label="Missing word">
                         <span id="fb_after">gestern nach Hause gegangen. Und ich muss das auch ein bisschen länger machen.</span>
                     </p>
-                    <button class="answer_submit" type="submit">Submit answer</button>
+                    <button class="answer_submit" type="submit" id="fb-submit">Submit answer</button>
                 </form>
+                <div id="fb-feedback">
+                    <p id="fb-feedback-text"></p>
+                    <!-- use type button here as it is not a submit action -->
+                    <button id="fb-feedback-next" type="button" class="answer_submit" >Next Card</button>
+                </div>
+
+
             </section>
 
 

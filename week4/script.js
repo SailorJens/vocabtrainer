@@ -29,6 +29,10 @@ const pFBGerman = document.getElementById("fb_german");
 const spanFBBefore = document.getElementById("fb_before");
 const spanFBAfter = document.getElementById("fb_after");
 const inpFBAnswer = document.getElementById("fb_answer");
+const btnFBSubmit = document.getElementById("fb-submit");
+const divFBFeedback = document.getElementById("fb-feedback");
+const pFBFeedbackText = document.getElementById("fb-feedback-text");
+const btnFBNext = document.getElementById("fb-feedback-next");
 
 const formMC = document.getElementById("m-answer-form");
 
@@ -140,6 +144,10 @@ function modeChanged(event) {
     }
 }
 
+function resetValidity(event) {
+    event.target.setCustomValidity('');
+}
+
 function startReturningUser() {
     
     showModeSelection()
@@ -152,43 +160,101 @@ function startReturningUser() {
         button.addEventListener("change", modeChanged)
     });
     formFB.addEventListener("submit", fbAnswerSubmitted);
+    btnFBNext.addEventListener("click", startFillBlank);
+    inpFBAnswer.addEventListener("input", resetValidity);
 
 }
 
-function startFillBlank() {
-    console.log("startFillBlank")
-
-    // show correct form
-    secMultipleChoice.style.display = "none";
-    secFillBlank.style.display = "";
-
-    // load sentence
-    card = {
+const currentCard = {
         id : 1,
         german : "Gibt es im Klassenzimmer Stühle?",
         turkish : "Sınıfta sandalyeler var mı?",
         turkish_blank :  "Sınıfta {{sandalyeler}} var mı?"
     }
-    // display sentence
-    pFBGerman.innerHTML = card.german;
-    spanFBBefore.innerHTML = card.turkish_blank.split("{{")[0];
-    spanFBAfter.innerHTML = card.turkish_blank.split("}}")[1];
+
+function initialiseFBForm() {
+    // show correct form
+    secMultipleChoice.style.display = "none";
+    secFillBlank.style.display = "";
+    inpFBAnswer.disabled = false;
+    inpFBAnswer.value = "";
+    btnFBSubmit.disabled = false;
     // set cursor in answer field
     inpFBAnswer.focus();
+    divFBFeedback.style.display = "none";
+
+}    
+
+function startFillBlank() {
+    initialiseFBForm();
+
+    // pull new card
+
+    // display sentence
+    pFBGerman.innerHTML = currentCard.german;
+    spanFBBefore.innerHTML = currentCard.turkish_blank.split("{{")[0];
+    spanFBAfter.innerHTML = currentCard.turkish_blank.split("}}")[1];
+    
 
 }
 
+function disableAnswerForm() {
+    inpFBAnswer.disabled = true;
+    btnFBSubmit.disabled = true;
+    divFBFeedback.style.display = "";
+}
+
+function handleCorrectFBAnswer() {
+    pFBFeedbackText.innerHTML = "That's correct. 👍";
+
+
+}
+
+function handleIncorrectFBAnswer() {
+    pFBFeedbackText.innerHTML = "The correct answer was: <em>" + currentCard.turkish_blank.split("{{")[1].split("}}")[0] + "</em>";
+   
+}
+
+
 function fbAnswerSubmitted(event) {
     event.preventDefault()
+    answer = inpFBAnswer.value.trim();
+
+    // avoid an empty answer
+    if (answer === '') {
+        // set the error message
+        inpFBAnswer.setCustomValidity('Please fill in this field.');
+        inpFBAnswer.reportValidity(); 
+        console.log("return triggered")
+        return;
+    } 
+   
     inpFBAnswer.blur();
+    disableAnswerForm();
+    
+    // Check if answer matches the blanked part of the Turkish sentence
+    correct = answer ===  currentCard.turkish_blank.split("{{")[1].split("}}")[0];
+    if (correct) {
+        handleCorrectFBAnswer();
+    } else {
+        handleIncorrectFBAnswer();
+    }
+    
+}
+
+function initialiseMCForm() {
+    // show correct form
+    secMultipleChoice.style.display = "";
+    secFillBlank.style.display = "none";
+    
 }
 
 
 function startMultipleChoice() {
-    console.log("startMultipleChoice")
-    secMultipleChoice.style.display = "";
-    secFillBlank.style.display = "none";
+    initialiseMCForm();
 
-    // load sentence
+    // load sentence + answers
+
+
     // display sentence
 }
