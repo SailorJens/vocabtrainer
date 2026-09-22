@@ -249,12 +249,33 @@ function initialiseMCForm() {
     
 }
 
+const currentWrongAnswers = {
+        "wrong_answers" : [
+            "Wrong answer 1",
+            "Wrong answer 2",
+            "Wrong answer 3"
+        ]
+    }
 
 function startMultipleChoice() {
     initialiseMCForm();
 
     // load sentence + answers
 
+    answers = [currentCard.turkish];
+    answers.push(currentWrongAnswers.wrong_answers);
+    
+    // shuffel answers
 
-    // display sentence
+    for (let i = answers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [answers[i], answers[j]] = [answers[j], answers[i]];
+    }
+
+    options.forEach(options, idx) => {
+        options.text
+    }
+    
+
+ 
 }
