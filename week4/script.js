@@ -35,6 +35,14 @@ const pFBFeedbackText = document.getElementById("fb-feedback-text");
 const btnFBNext = document.getElementById("fb-feedback-next");
 
 const formMC = document.getElementById("m-answer-form");
+// get an array of the 4 answers in multiple choice by the class attribute
+const optionsMCAnswers = document.querySelectorAll(".mc-option-answer")
+const pMCGerman = document.getElementById("mc-german-text");
+const btnMCSubmit = document.getElementById("mc-submit");
+const divMCFeedback = document.getElementById("mc-feedback");
+const pMCFeedbackText = document.getElementById("mc-feedback-text");
+const btnMCNext = document.getElementById("mc-feedback-next");
+
 
 // the user's data
 let user = null;
@@ -162,6 +170,10 @@ function startReturningUser() {
     formFB.addEventListener("submit", fbAnswerSubmitted);
     btnFBNext.addEventListener("click", startFillBlank);
     inpFBAnswer.addEventListener("input", resetValidity);
+    formMC.addEventListener("change", enableMCSubmit);
+    formMC.addEventListener("submit", mcAnswerSubmitted);
+    btnMCNext.addEventListener("click", startMultipleChoice);
+
 
 }
 
@@ -198,7 +210,7 @@ function startFillBlank() {
 
 }
 
-function disableAnswerForm() {
+function disableFBAnswerForm() {
     inpFBAnswer.disabled = true;
     btnFBSubmit.disabled = true;
     divFBFeedback.style.display = "";
@@ -230,10 +242,10 @@ function fbAnswerSubmitted(event) {
     } 
    
     inpFBAnswer.blur();
-    disableAnswerForm();
+    disableFBAnswerForm();
     
     // Check if answer matches the blanked part of the Turkish sentence
-    correct = answer ===  currentCard.turkish_blank.split("{{")[1].split("}}")[0];
+    const correct = answer ===  currentCard.turkish_blank.split("{{")[1].split("}}")[0];
     if (correct) {
         handleCorrectFBAnswer();
     } else {
@@ -246,8 +258,14 @@ function initialiseMCForm() {
     // show correct form
     secMultipleChoice.style.display = "";
     secFillBlank.style.display = "none";
-    
+    divMCFeedback.style.display = "none";
+    formMC.reset();
 }
+
+function enableMCSubmit() {
+    btnMCSubmit.disabled = false;
+}
+
 
 const currentWrongAnswers = {
         "wrong_answers" : [
@@ -259,23 +277,69 @@ const currentWrongAnswers = {
 
 function startMultipleChoice() {
     initialiseMCForm();
+    btnMCSubmit.disabled = true;
 
     // load sentence + answers
 
     answers = [currentCard.turkish];
-    answers.push(currentWrongAnswers.wrong_answers);
+    // add the loaded answers individually rather than the array as a single value with ...
+    answers.push(...currentWrongAnswers.wrong_answers);
     
-    // shuffel answers
-
+    // shuffel answers:
+    // each answer is swapped with a random other answer earlier in the array (or keep position)
+    // start from the last array element/answer
     for (let i = answers.length - 1; i > 0; i--) {
+        // determine the new position e.g. for position 3 (answer 4)
+        // a random number between 0 and 3
         const j = Math.floor(Math.random() * (i + 1));
         [answers[i], answers[j]] = [answers[j], answers[i]];
     }
 
-    // options.forEach(options, idx) => {
-    //     options.text
-    // }
+    // loop through the option spans and put the text from answer array
+    // using an arrow function (cf. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+    // An alternative without using the .forEach method would be 
+    // for (const [idx, answer] of answers.entries()) ...
+    // but .forEach is better readable
+    optionsMCAnswers.forEach((optionSpan, idx) => {
+        optionSpan.textContent = answers[idx]
+    })
     
+    pMCGerman.textContent = currentCard.german;
+}
 
- 
+function mcAnswerSubmitted(event) {
+    event.preventDefault()
+    disableMCAnswerForm();
+
+    // find the selected option with a pseudo class
+    const selectedOption =  document.querySelector('input[name="m-answer"]:checked');
+    // then get the span text via the parent in the DOM
+    const selectedText = selectedOption.parentElement.querySelector("span").textContent;
+    
+    // Check if answer matches the blanked part of the Turkish sentence
+    const correct = currentCard.turkish === selectedText;
+    if (correct) {
+        handleCorrectMCAnswer();
+    } else {
+        handleIncorrectMCAnswer();
+    }
+    
+}
+
+function disableMCAnswerForm() {
+    //this does not work, need to use fieldset instead ###TODO
+    // formMC.disabled = true;
+    btnMCSubmit.disabled = true;
+    divMCFeedback.style.display = "";
+}
+
+function handleCorrectMCAnswer() {
+    pMCFeedbackText.innerHTML = "That's correct. 👍";
+
+
+}
+
+function handleIncorrectMCAnswer() {
+    pMCFeedbackText.innerHTML = "The correct answer was: <em>" + currentCard.turkish + "</em>";
+   
 }
