@@ -272,9 +272,9 @@ function startMultipleChoice() {
         [answers[i], answers[j]] = [answers[j], answers[i]];
     }
 
-    options.forEach(options, idx) => {
-        options.text
-    }
+    // options.forEach(options, idx) => {
+    //     options.text
+    // }
     
 
  
