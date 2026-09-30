@@ -33,6 +33,7 @@ const btnFBSubmit = document.getElementById("fb-submit");
 const divFBFeedback = document.getElementById("fb-feedback");
 const pFBFeedbackText = document.getElementById("fb-feedback-text");
 const btnFBNext = document.getElementById("fb-feedback-next");
+const btnFBListen = document.getElementById("fb_listen");
 
 const formMC = document.getElementById("m-answer-form");
 // get an array of the 4 answers in multiple choice by the class attribute
@@ -177,6 +178,18 @@ function resetValidity(event) {
     event.target.setCustomValidity('');
 }
 
+async function listenToSentence() {
+    const url =
+        "https://translate.google.com/translate_tts" +
+        "?ie=UTF-8" +
+        "&client=tw-ob" +
+        "&tl=tr" +
+        "&q=" + encodeURIComponent(currentCard.turkish);
+
+    const audio = new Audio(url);
+    audio.play();
+}
+
 function startReturningUser() {
     
     showModeSelection()
@@ -191,6 +204,7 @@ function startReturningUser() {
     formFB.addEventListener("submit", fbAnswerSubmitted);
     btnFBNext.addEventListener("click", startFillBlank);
     inpFBAnswer.addEventListener("input", resetValidity);
+    btnFBListen.addEventListener("click", listenToSentence);
     formMC.addEventListener("change", enableMCSubmit);
     formMC.addEventListener("submit", mcAnswerSubmitted);
     btnMCNext.addEventListener("click", startMultipleChoice);
