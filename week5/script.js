@@ -222,7 +222,13 @@ async function startFillBlank() {
     initialiseFBForm();
 
     // pull new card
-    currentCard = await getCard(user.unit);
+    try {
+        currentCard = await getCard(user.unit);
+        console.log(currentCard);
+    } catch (error) {
+        console.error("Getting card failed:", error);
+    }
+   
 
     // display sentence
     pFBGerman.innerHTML = currentCard.german;
