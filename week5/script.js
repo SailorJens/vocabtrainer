@@ -44,6 +44,27 @@ const pMCFeedbackText = document.getElementById("mc-feedback-text");
 const btnMCNext = document.getElementById("mc-feedback-next");
 
 
+// webservices
+
+// get a new card
+async function getCard(unit) {
+    const response = await fetch(`https://api.wanderco.net/api/card/${unit}`);
+    const card = await response.json();
+
+    return card;
+}
+
+// get 3 real turkish sentences other than the current card from the same unit
+async function getWrongSentences(unit, excludeCardId) {
+    const response = await fetch(`https://api.wanderco.net/api/wrong-sentences/${unit}/${excludeCardId}`);
+    const sentences = await response.json();
+
+    return sentences;
+}
+
+
+
+
 // the user's data
 let user = null;
 
@@ -197,10 +218,11 @@ function initialiseFBForm() {
 
 }    
 
-function startFillBlank() {
+async function startFillBlank() {
     initialiseFBForm();
 
     // pull new card
+    currentCard = await getCard(user.unit);
 
     // display sentence
     pFBGerman.innerHTML = currentCard.german;
