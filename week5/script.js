@@ -179,25 +179,33 @@ function resetValidity(event) {
 }
 
 async function listenToSentence() {
-   const response = await fetch(
-        "https://ahm7xmakki.com/speech/api/tts",
+    // my own tts implementation using edge tts
+    const response = await fetch(
+        "https://api.wanderco.net/api/tts",
         {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                text: currentCard.turkish,
-                voice: "tr-TR-EmelNeural"
+                text: currentCard.turkish
             })
         }
     );
 
+    // create a mp3 in the browser memory with the audio
     const audioBlob = await response.blob();
+    // get the (temporary) URL to that audio
     const audioUrl = URL.createObjectURL(audioBlob);
 
+    // create the "player"
     const audio = new Audio(audioUrl);
     await audio.play();
+
+   // delete the temporary URL when playback has finished to release the browser memory
+   audio.addEventListener("ended", () => {
+    URL.revokeObjectURL(audioUrl);
+   });
 }
 
 function startReturningUser() {
