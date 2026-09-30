@@ -179,15 +179,25 @@ function resetValidity(event) {
 }
 
 async function listenToSentence() {
-    const url =
-        "https://translate.googleapis.com/translate_tts" +
-        "?ie=UTF-8" +
-        "&client=tw-ob" +
-        "&tl=tr" +
-        "&q=" + encodeURIComponent(currentCard.turkish);
+   const response = await fetch(
+        "https://ahm7xmakki.com/speech/api/tts",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                text: currentCard.turkish,
+                voice: "tr-TR-EmelNeural"
+            })
+        }
+    );
 
-    const audio = new Audio(url);
-    audio.play();
+    const audioBlob = await response.blob();
+    const audioUrl = URL.createObjectURL(audioBlob);
+
+    const audio = new Audio(audioUrl);
+    await audio.play();
 }
 
 function startReturningUser() {
