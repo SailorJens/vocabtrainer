@@ -198,7 +198,7 @@ function startReturningUser() {
 
 }
 
-const currentCard = {
+let currentCard = {
         id : 1,
         german : "Gibt es im Klassenzimmer Stühle?",
         turkish : "Sınıfta sandalyeler var mı?",
