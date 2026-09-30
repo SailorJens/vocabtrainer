@@ -49,6 +49,7 @@ const btnMCNext = document.getElementById("mc-feedback-next");
 
 // get a new card
 async function getCard(unit) {
+    // using the $() notation with ``, similar to f strings in Python to make the code better readable
     const response = await fetch(`https://api.wanderco.net/api/card/${unit}`);
     const card = await response.json();
 
@@ -61,6 +62,27 @@ async function getWrongSentences(unit, excludeCardId) {
     const sentences = await response.json();
 
     return sentences;
+}
+
+// my own tts implementation using Edge TTS
+async function getTTS(turkishText) {
+    // I'm using a POST request as the text may be long, and then the URL becomes awkward. 
+    const response = await fetch(
+        "https://api.wanderco.net/api/tts",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                text: turkishText
+            })
+        }
+    );
+
+    // create a mp3 in the browser memory with the audio
+    const audioBlob = await response.blob();
+    return audioBlob;
 }
 
 
@@ -179,22 +201,8 @@ function resetValidity(event) {
 }
 
 async function listenToSentence() {
-    // my own tts implementation using edge tts
-    const response = await fetch(
-        "https://api.wanderco.net/api/tts",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                text: currentCard.turkish
-            })
-        }
-    );
-
-    // create a mp3 in the browser memory with the audio
-    const audioBlob = await response.blob();
+    // retrieve the mp3 via web service
+    const audioBlob = await getTTS(currentCard.turkish);
     // get the (temporary) URL to that audio
     const audioUrl = URL.createObjectURL(audioBlob);
 
@@ -202,8 +210,8 @@ async function listenToSentence() {
     const audio = new Audio(audioUrl);
     await audio.play();
 
-   // delete the temporary URL when playback has finished to release the browser memory
-   audio.addEventListener("ended", () => {
+    // delete the temporary URL when playback has finished to release the browser memory
+    audio.addEventListener("ended", () => {
     URL.revokeObjectURL(audioUrl);
    });
 }
