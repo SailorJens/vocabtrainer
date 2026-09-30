@@ -295,23 +295,28 @@ function enableMCSubmit() {
 }
 
 
-const currentWrongAnswers = {
-        "wrong_answers" : [
+let currentWrongAnswers = [
             "Wrong answer 1",
             "Wrong answer 2",
             "Wrong answer 3"
-        ]
-    }
+]
 
-function startMultipleChoice() {
+async function startMultipleChoice() {
     initialiseMCForm();
     btnMCSubmit.disabled = true;
 
     // load sentence + answers
+    // pull new card
+    try {
+        currentCard = await getCard(user.unit);
+        currentWrongAnswers = await getWrongSentences(user.unit, currentCard.id);
+    } catch (error) {
+        console.error("Getting card and sentences failed:", error);
+    }
 
     answers = [currentCard.turkish];
     // add the loaded answers individually rather than the array as a single value with ...
-    answers.push(...currentWrongAnswers.wrong_answers);
+    answers.push(...currentWrongAnswers);
     
     // shuffel answers:
     // each answer is swapped with a random other answer earlier in the array (or keep position)
