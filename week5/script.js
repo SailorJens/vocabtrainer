@@ -180,7 +180,7 @@ function resetValidity(event) {
 
 async function listenToSentence() {
     const url =
-        "https://translate.google.com/translate_tts" +
+        "https://translate.googleapis.com/translate_tts" +
         "?ie=UTF-8" +
         "&client=tw-ob" +
         "&tl=tr" +
