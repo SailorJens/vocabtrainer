@@ -1,0 +1,42 @@
+/*  Generally I want to define the box sizes, not the content 
+    so I have better control over the layout.
+    That means that the size of the box includes the border width and the padding
+    (but not the margin)
+*/
+* {
+    box-sizing: border-box;
+}
+
+
+/*
+setting a default font style.
+ Also, a colour for the screen outside my actual page, 
+ as I want to control the "work area" properly, and not use all avilable width as 
+ I don't have so much content. 
+This defines my actual content area
+rem uses a size relative to the font size (set in html)
+max-width means that the pane cannot be wider, but it can be smaller if the windwo is smaller. 
+margin-inline: auto means: Inline refers to left/right for normal pages as that is the main inline direction
+(vs. block, which usually means top/bottom as it is vertical to the inline direction. )
+The auto means that any available additional space is used equally on both sides. If ensures my content is centered on the page.
+*/
+body {
+    background-color:floralwhite;
+    margin: 0; 
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    background-color: #f0f0f0;
+}
+
+/*
+block is the dirction vertical to inline, which by default is left to right. So this is a margin at the bottom.
+*/
+header {
+    margin-block-start: 0;
+    margin-block-end: 2rem;
+}
+
+.container {
+    max-width: 30rem;
+    background-color: aqua;
+}
