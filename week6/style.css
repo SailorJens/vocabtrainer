@@ -32,7 +32,6 @@ body {
 block is the dirction vertical to inline, which by default is left to right. So this is a margin at the bottom.
 */
 header {
-    margin-block-start: 0;
     margin-block-end: 2rem;
 }
 
