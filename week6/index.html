@@ -13,7 +13,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- My own stylesheet -->
-        <link rel="stylesheet" href="style.css?v2">
+        <link rel="stylesheet" href="style.css?v3">
 
         <title>Vocabulary Trainer</title>
 
@@ -23,25 +23,57 @@
     <body>
         <div class="container mt-0 ">
 
-            <header>
-                <h1>Vocabulary Trainer</h1>
+            <header class="mb-4 p-3 text-light">
+                <h1 class="fs-2 fw-bold m-0">Vocabulary Trainer</h1>
                 <small>Learn a few new words every day.</small>  
             </header>
 
             <section id="user-area">
                 <!-- known OR new user -->
+                <div id="new-user">
+
+                </div>
+
+                <div id="known-user">
+
+                </div>
+
             </section>
 
             <section id="settings-area">
-                <!-- unit selector + mode selector -->
+                <!-- unit selector AND mode selector -->
+                 <div id="unit-selector">
+
+                 </div>
+
+                 <div id="mode-selector">
+
+                 </div>
+
             </section>
 
             <main id="exercise-area">
                 <!-- multiple choice OR fill blank -->
+                 <div id="multiple-choice">
+                    <p id="mc-instruction">
+                        Choose the correct translation for the following translation:
+                    </p>
+                    <p id="mc-german-text">
+                        This will be the German sentence the learner will have to guess the Turkish equivalent for.
+                    </p>
+                    <fieldset id="mc-answers">
+                        <!-- answers added by jQuery -->
+                    </fieldset>
+                 </div>
+
+                 <div id="fill-blank">
+
+                 </div>
             </main>
 
             <section id="feedback-area">
-                ...
+                <!-- feedback -->
+
             </section>
 
             <div id="action-area">
