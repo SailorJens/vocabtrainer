@@ -15,6 +15,12 @@
         <!-- My own stylesheet -->
         <link rel="stylesheet" href="style.css?v3">
 
+        <!-- jQuery from Google CDN so it can use cached versions -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <!-- My own script, deferred to only load once the HTML DOM is loaded -->
+        <script src="script.js" defer></script>
+
         <title>Vocabulary Trainer</title>
 
 
@@ -58,7 +64,7 @@
                     <p id="mc-instruction" class="fst-italic text-secondary">
                         Choose the correct translation for the following sentence:
                     </p>
-                    <p id="mc-german-text" class="fs-6 fw-semibold my-4">
+                    <p id="mc-source-text" class="learning-content">
                         This will be the German sentence the learner will have to guess the Turkish equivalent for.
                     </p>
                     <fieldset id="mc-answers">
@@ -76,8 +82,13 @@
 
             </section>
 
-            <div id="action-area">
-                <!-- submit / next -->
+            <div id="action-area" class="d-flex justify-content-end">
+                <!-- create new user / submit answer / next question: button used for all actions -->
+                <!-- use display:flex and justify content to the end via bootstrap to move the button to the right-->
+                <button id="action-button" class="btn btn-primary">
+                    <!-- generic bootstrap button styling -->
+                    Create User
+                </button>
             </div>
 
         </div>
