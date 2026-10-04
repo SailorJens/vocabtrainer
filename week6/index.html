@@ -13,13 +13,15 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- My own stylesheet -->
-        <link rel="stylesheet" href="style.css?v3">
+        <link rel="stylesheet" href="style.css?v4">
 
         <!-- jQuery from Google CDN so it can use cached versions -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
         <!-- My own script, deferred to only load once the HTML DOM is loaded -->
         <script src="script.js" defer></script>
+
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 
         <title>Vocabulary Trainer</title>
 
@@ -89,20 +91,31 @@
             </section>
 
             <main id="exercise-area">
+
+                <p id="instruction" class="fst-italic text-secondary" />
+
+                <p id="source-text" class="learning-content" />
+
                 <!-- multiple choice OR fill blank -->
                  <div id="multiple-choice" >
-                    <p id="mc-instruction" class="fst-italic text-secondary">
-                        Choose the correct translation for the following sentence:
-                    </p>
-                    <p id="mc-source-text" class="learning-content">
-                        This will be the German sentence the learner will have to guess the Turkish equivalent for.
-                    </p>
-                    <fieldset id="mc-answers">
-                        <!-- answers added by jQuery -->
-                    </fieldset>
+                    <form>
+                        <fieldset id="mc-answers">
+                            <!-- answers added by jQuery -->
+                        </fieldset>
+                    </form>
                  </div>
 
                  <div id="fill-blank">
+                    <form>
+                        <p>
+                            <span id="fb-before">ich</span>
+                            <input type="text" id="fb-answer" aria-label="Missing word">
+                            <span id="fb-after">gestern nach Hause gegangen. Und ich muss das auch ein bisschen länger machen.</span>
+                            <!-- button to listen for the sentence to help the user. -->
+                            <button type="button" id="fb-listen">🔊 Listen</button>
+                        </p>
+
+                    </form>
 
                  </div>
             </main>

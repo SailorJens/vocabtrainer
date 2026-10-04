@@ -15,22 +15,46 @@ const feedbackArea = document.getElementById("feedback-area");
 
 const selUnit = document.getElementById("unit");
 const $rbsMode = $('input[name="mode"]');
+const instruction = document.getElementById("instruction");
+const sourceText = document.getElementById("source-text");
+const fbAnswer = document.getElementById("fb-answer");
 
 // webservices
 
 // get a new card
 async function getCard(unit) {
-    // using the $() notation with ``, similar to f strings in Python to make the code better readable
-    const response = await fetch(`https://api.wanderco.net/api/card/${unit}`);
-    const card = await response.json();
+    let card = null;
+    
+    try {
+        const response = await fetch(`https://api.wanderco.net/api/card/${unit}`);
+        // using the template literals with ``, similar to f strings in Python to make the code better readable
+        card = await response.json();
+    } catch {
+            card = {
+            id : 1,
+            german : "Gibt es im Klassenzimmer Stühle?",
+            turkish : "Sınıfta sandalyeler var mı?",
+            turkish_blank :  "Sınıfta {{sandalyeler}} var mı?"
+        }
+    }
 
     return card;
 }
 
 // get 3 real turkish sentences other than the current card from the same unit
 async function getWrongSentences(unit, excludeCardId) {
-    const response = await fetch(`https://api.wanderco.net/api/wrong-sentences/${unit}/${excludeCardId}`);
-    const sentences = await response.json();
+    let sentences = null;
+
+    try {
+        const response = await fetch(`https://api.wanderco.net/api/wrong-sentences/${unit}/${excludeCardId}`);
+        sentences = await response.json();
+    } catch {
+        sentences = [
+            "Wrong answer 1",
+            "Wrong answer 2",
+            "Wrong answer 3"
+        ]
+    }
 
     return sentences;
 }
@@ -60,7 +84,7 @@ async function getTTS(turkishText) {
 
 // global state
 let user = null;
-let currentActionState = null;
+let currentAction = null;
 let currentCard = null; 
 
 // user persistance
@@ -103,23 +127,75 @@ function createUser() {
     saveUser();
 }
 
-function displayMultipleChoiceQuestion() {
-    
+async function displayMultipleChoiceQuestion() {
 
+    multipleChoice.style.display = "";
+    fillBlank.style.display = "none";
+
+    instruction.innerText = "Choose the correct translation for the following sentence:";
+    sourceText.innerText = currentCard.german;
+    let currentWrongAnswers = await getWrongSentences(user.unit, currentCard.id);
+    
+    answers = [currentCard.turkish];
+    // add the loaded answers individually rather than the array as a single value with ...
+    answers.push(...currentWrongAnswers);
+    
+    // shuffel answers:
+    // each answer is swapped with a random other answer earlier in the array (or keep position)
+    // start from the last array element/answer
+    for (let i = answers.length - 1; i > 0; i--) {
+        // determine the new position e.g. for position 3 (answer 4)
+        // a random number between 0 and 3
+        const j = Math.floor(Math.random() * (i + 1));
+        [answers[i], answers[j]] = [answers[j], answers[i]];
+    }
+
+    // programmatically add answer options to the fieldset using jQuery
+    // first clear old
+    $("#mc-answers").empty();
+    // use the foreach method and the arrow function instead of writing a separate function body
+    answers.forEach((answer) => {
+        $("#mc-answers").append(`
+            <label>
+                <input type="radio" name="mc-answer" value="${answer}">
+                ${answer}
+            </label>
+        `);
+    });
+
+    // Add event handlers to the new elements to drive submit button enablement
+    $("#mc-answers").on(
+        "change",
+        'input[name="mc-answer"]',
+        updateActionButton
+    );
 
 }
 
 function displayFillBlankQuestion() {
 
+    multipleChoice.style.display = "none";
+    fillBlank.style.display = "";
+
+    instruction.innerText = "Fill in the missing word:";
+    sourceText.innerText = currentCard.german;
+
+    // display turkish sentence
+    document.getElementById("fb-before").innerHTML = currentCard.turkish_blank.split("{{")[0];
+    document.getElementById("fb-after").innerHTML = currentCard.turkish_blank.split("}}")[1];
+
+    fbAnswer.value = "";
+    fbAnswer.focus();
+
 }
 
 // load a new question / card
-function loadQuestion() {
+async function loadQuestion() {
     // hide feedback (blank it, keep space)
     // ###
-    //currentCard = getCard(user.unit);
+    currentCard = await getCard(user.unit);
     if (user.mode === "multiple-choice") {
-        displayMultipleChoiceQuestion();
+        await displayMultipleChoiceQuestion();
     } else {
         displayFillBlankQuestion();
     }
@@ -133,7 +209,7 @@ function checkAnswer() {
 
 
 function updateSectionVisibility() {
-    if (currentActionState === "createUser") {
+    if (currentAction === "createUser") {
         newUser.style.display = "";
         knownUser.style.display = "none";
         settingsArea.style.display = "none";
@@ -153,7 +229,7 @@ function updateSectionVisibility() {
 // set approprate button text
 function updateActionButton() {
 
-    switch (currentActionState) {
+    switch (currentAction) {
         case "createUser":
             $btnAction
                 .text("Create User")
@@ -161,7 +237,18 @@ function updateActionButton() {
             break;
 
         case "answerQuestion":
-            $btnAction.text("Check Answer");
+
+            if (user.mode === "multiple-choice") {
+                // disable if nothing is selected
+                const disabled = $('input[name="mc-answer"]:checked').val() === undefined;
+                $btnAction
+                    .text("Check Answer")
+                    .prop("disabled", disabled);
+            } else {
+                $btnAction
+                    .text("Check Answer")
+                    .prop("disabled", $("#fb-answer").val().trim() === '');
+            }
             break;
 
         case "nextQuestion":
@@ -177,26 +264,26 @@ function updateActionButton() {
 
 
 // Action button clicked
-function handleAction() {
+async function handleAction() {
     // do the appropriate action depending on current state
-    switch (currentActionState) {
+    switch (currentAction) {
         case "createUser":
             createUser();
             setGreeting();
             initialiseSettings();
-            currentActionState = "answerQuestion";
+            currentAction = "answerQuestion";
             updateSectionVisibility();
-            loadQuestion();
+            await loadQuestion();
             break;
 
         case "answerQuestion":
-            currentActionState = "nextQuestion";
+            currentAction = "nextQuestion";
             checkAnswer();
             break;
 
         case "nextQuestion":
-            currentActionState = "answerQuestion";
-            loadQuestion();
+            currentAction = "answerQuestion";
+            await loadQuestion();
             break;
     }
     updateActionButton();
@@ -211,24 +298,19 @@ function validateName() {
     updateActionButton();
 }
 
-function handleSettingsChange(event) {
-    
+async function handleSettingsChange(event) {
     if (event.target.name === "mode")
     {
         user.mode = event.target.value;
         if (event.target.value === "multiple-choice") {
-            multipleChoice.style.display = "";
-            fillBlank.style.display = "none";
             displayMultipleChoiceQuestion();
 
-        } else {
-            multipleChoice.style.display = "none";
-            fillBlank.style.display = "";
+        } else { // fill blank
             displayFillBlankQuestion();
         }
     } else { // unit
         user.unit = event.target.value;
-        loadQuestion();
+        await loadQuestion();
     }
 
     saveUser();
@@ -240,6 +322,7 @@ function initialiseSettings() {
     $rbsMode
         .filter(`[value="${user.mode}"]`)
         .prop("checked", true);
+
 }
 
 
@@ -248,21 +331,22 @@ function setupEventListeners() {
     inputUserName.addEventListener("input", validateName);
     selUnit.addEventListener("change", handleSettingsChange)
     $rbsMode.on("change", handleSettingsChange);
+    fbAnswer.addEventListener("input", updateActionButton);
     
 }
 
 
-function startApp() {
+async function startApp() {
     if (userExists()) {
         loadUser();
         setGreeting();
         initialiseSettings();
-        loadQuestion();
-        currentActionState = "answerQuestion";
+        await loadQuestion();
+        currentAction = "answerQuestion";
         
     } else {
         inviteUser();
-        currentActionState = "createUser";
+        currentAction = "createUser";
     }
 
     updateSectionVisibility();
