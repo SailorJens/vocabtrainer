@@ -290,11 +290,7 @@ function updateActionButton() {
             break;
     }
 
-   
 }
-
-
-//Event Listeners
 
 
 // Action button clicked
@@ -323,12 +319,7 @@ async function handleAction() {
     updateActionButton();
 }
 
-function validateName() {
-    if (inputUserName.value.trim() === "") {
-        inputUserName.setCustomValidity("Please fill in this field.");
-    } else {
-        inputUserName.setCustomValidity("");
-    }
+function monitorUserNameInput() {
     updateActionButton();
 }
 
@@ -377,7 +368,7 @@ async function listenToSentence() {
 
 function setupEventListeners() {
     $btnAction.on("click", handleAction);
-    inputUserName.addEventListener("input", validateName);
+    inputUserName.addEventListener("input", monitorUserNameInput);
     selUnit.addEventListener("change", handleSettingsChange)
     $rbsMode.on("change", handleSettingsChange);
     fbAnswer.addEventListener("input", updateActionButton);
