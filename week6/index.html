@@ -37,11 +37,18 @@
             <section id="user-area">
                 <!-- known OR new user -->
                 <div id="new-user">
-
+                    <form id="new-user-form">
+                        <p>Welcome to the vocabulary trainer!</p>
+                        <label>What's your name?
+                            <input id="user-name" type="text" required />
+                        </label>
+                    </form>
                 </div>
 
                 <div id="known-user">
-
+                    <p id="msg-returning-user">
+                        Welcome back to the vocabulary trainer, XXX!
+                    </p>
                 </div>
 
             </section>
@@ -50,10 +57,33 @@
                 <!-- unit selector AND mode selector -->
                  <div id="unit-selector">
 
+                    <label for="unit">
+                        You are currently learning unit
+                    </label>
+
+                    <select id="unit">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
                  </div>
 
                  <div id="mode-selector">
+                    <fieldset class="mode-selection">
+                        <legend>Exercise mode</legend>
 
+                        <!-- Input is a void element, so I always need to put a label. -->  
+                        <!-- The name attributes tells the browser which options belong
+                        to the set that only one element can be selected from. -->   
+                        <label class="radio-option">
+                            <input type="radio" name="mode" id="multiple-choice" value="multiple-choice" />
+                            Multiple choice
+                        </label>
+                        
+                        <label class="radio-option">
+                            <input type="radio" name="mode" id="fill-in-the-blank" value="fill-in-the-blank" />
+                            Fill in the blank
+                        </label>
+                    </fieldset>
                  </div>
 
             </section>
