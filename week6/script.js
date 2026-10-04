@@ -203,6 +203,7 @@ function displayFillBlankQuestion() {
 // load a new question / card
 async function loadQuestion() {
     // hide feedback (blank it, keep space)
+    // so buttons stay in same place for better UX
     feedbackArea.style.visibility = "hidden";
   
     currentCard = await getCard(user.unit);
