@@ -159,9 +159,14 @@ async function displayMultipleChoiceQuestion() {
     // use the foreach method and the arrow function instead of writing a separate function body
     answers.forEach((answer) => {
         $("#mc-answers").append(`
-            <label>
-                <input type="radio" name="mc-answer" value="${answer}">
-                <span>${answer}</span>
+            <label class="form-check d-flex align-items-center gap-2">
+                <input
+                    class="form-check-input mt-0"
+                    type="radio"
+                    name="mc-answer"
+                    value="${answer}"
+                >
+                <span class="form-check-label">${answer}</span>
             </label>
         `);
     });
@@ -228,9 +233,9 @@ function checkAnswer() {
     const correct = answer === correctAnswer;
 
     if (correct) {
-        $('#feedback-message').text("Correct!");
+        $('#feedback-message').html('<i class="bi bi-check-circle text-success me-2"></i>That is correct!');
     } else {
-        $('#feedback-message').html(`Incorrect. The correct answer is: <br /><span>${correctAnswer}</span>`);
+        $('#feedback-message').html(`<i class="bi bi-x-circle text-danger me-2"></i>Incorrect. The correct answer is: <br /><span class="fw-semibold learning-content">${correctAnswer}</span>`);
     }
     
 }
@@ -327,21 +332,17 @@ function validateName() {
 }
 
 async function handleSettingsChange(event) {
-    if (event.target.name === "mode")
-    {
+    if (event.target.name === "mode") {
         user.mode = event.target.value;
-        if (event.target.value === "multiple-choice") {
-            displayMultipleChoiceQuestion();
-
-        } else { // fill blank
-            displayFillBlankQuestion();
-        }
-    } else { // unit
+    } else { 
         user.unit = event.target.value;
-        await loadQuestion();
     }
 
     saveUser();
+
+    // reconcile state by moving to a new question
+    currentAction = "nextQuestion";
+    await handleAction();
 
 }
 
