@@ -221,11 +221,14 @@ function checkAnswer() {
 
     let correctAnswer = null;
     let answer = null;
+
     if (user.mode === "multiple-choice") {
+        //lock the answer
         $('#mc-answers input[name="mc-answer"]').prop("disabled", true);
         answer = $('input[name="mc-answer"]:checked').val();
         correctAnswer = currentCard.turkish;
     } else {
+        //lock the answer
         fbAnswer.disabled = true;
         answer = fbAnswer.value.trim();
         correctAnswer = currentCard.turkish_blank.split("{{")[1].split("}}")[0];
@@ -234,9 +237,9 @@ function checkAnswer() {
     const correct = answer === correctAnswer;
 
     if (correct) {
-        $('#feedback-message').html('<i class="bi bi-check-circle text-success me-2"></i>Correct!');
+        $('#feedback-message').html('<i class="bi bi-check-circle text-success me-2" />Correct!');
     } else {
-        $('#feedback-message').html(`<i class="bi bi-x-circle text-danger me-2"></i>Incorrect. The correct answer is: <br /><span class="fw-semibold learning-content">${correctAnswer}</span>`);
+        $('#feedback-message').html(`<i class="bi bi-x-circle text-danger me-2" />Incorrect. The correct answer is: <br /><span class="fw-semibold learning-content">${correctAnswer}</span>`);
     }
     
 }
