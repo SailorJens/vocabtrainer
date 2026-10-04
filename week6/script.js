@@ -82,6 +82,10 @@ function userExists() {
 }
 
 
+function setGreeting() {
+    document.getElementById("msg-returning-user").innerText = "Welcome to the vocabulary trainer, " + user.name + "!";
+}
+
 // show Form to add name
 function inviteUser() {
     inputUserName.focus();
@@ -178,6 +182,7 @@ function handleAction() {
     switch (currentActionState) {
         case "createUser":
             createUser();
+            setGreeting();
             initialiseSettings();
             currentActionState = "answerQuestion";
             updateSectionVisibility();
@@ -250,6 +255,7 @@ function setupEventListeners() {
 function startApp() {
     if (userExists()) {
         loadUser();
+        setGreeting();
         initialiseSettings();
         loadQuestion();
         currentActionState = "answerQuestion";
