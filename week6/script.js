@@ -171,7 +171,7 @@ async function displayMultipleChoiceQuestion() {
         `);
     });
 
-    $("#mc-answers").prop("disabled", false);
+    $('#mc-answers input[name="mc-answer"]').prop("disabled", false);
 
     // Add event handlers to the new elements to drive submit button enablement
     $("#mc-answers").on(
@@ -221,7 +221,7 @@ function checkAnswer() {
     let correctAnswer = null;
     let answer = null;
     if (user.mode === "multiple-choice") {
-        $("#mc-answers").prop("disabled", true);
+        $('#mc-answers input[name="mc-answer"]').prop("disabled", true);
         answer = $('input[name="mc-answer"]:checked').val();
         correctAnswer = currentCard.turkish;
     } else {
