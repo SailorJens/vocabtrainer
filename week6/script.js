@@ -406,4 +406,4 @@ async function startApp() {
 
 
 // Start the application
-await startApp();
+startApp();
