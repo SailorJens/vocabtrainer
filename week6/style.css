@@ -41,3 +41,7 @@ small {
 .learning-content {
     font-family: Arial, Helvetica, sans-serif;
 }
+
+#feedback-area {
+    min-height: 4rem;
+}

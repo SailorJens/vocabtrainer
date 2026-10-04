@@ -97,9 +97,9 @@ function loadUser() {
     user = JSON.parse(localStorage.getItem("user"));
 }
 
-function deleteUser() {
-    localStorage.removeItem("user");
-}
+// function deleteUser() {
+//     localStorage.removeItem("user");
+// }
 
 function userExists() {
     return localStorage.getItem("user") !== null;
@@ -110,7 +110,7 @@ function setGreeting() {
     document.getElementById("msg-returning-user").innerText = "Welcome to the vocabulary trainer, " + user.name + "!";
 }
 
-// show Form to add name
+// show Form to add name for new user
 function inviteUser() {
     inputUserName.focus();
 }
@@ -150,18 +150,23 @@ async function displayMultipleChoiceQuestion() {
         [answers[i], answers[j]] = [answers[j], answers[i]];
     }
 
-    // programmatically add answer options to the fieldset using jQuery
+    // handle answer options with jQuery as they are being programmatically added and removed
+   
     // first clear old
     $("#mc-answers").empty();
+
+    // programmatically add answer options to the fieldset
     // use the foreach method and the arrow function instead of writing a separate function body
     answers.forEach((answer) => {
         $("#mc-answers").append(`
             <label>
                 <input type="radio" name="mc-answer" value="${answer}">
-                ${answer}
+                <span>${answer}</span>
             </label>
         `);
     });
+
+    $("#mc-answers").prop("disabled", false);
 
     // Add event handlers to the new elements to drive submit button enablement
     $("#mc-answers").on(
@@ -185,6 +190,7 @@ function displayFillBlankQuestion() {
     document.getElementById("fb-after").innerHTML = currentCard.turkish_blank.split("}}")[1];
 
     fbAnswer.value = "";
+    fbAnswer.disabled = false;
     fbAnswer.focus();
 
 }
@@ -192,7 +198,8 @@ function displayFillBlankQuestion() {
 // load a new question / card
 async function loadQuestion() {
     // hide feedback (blank it, keep space)
-    // ###
+    feedbackArea.style.visibility = "hidden";
+  
     currentCard = await getCard(user.unit);
     if (user.mode === "multiple-choice") {
         await displayMultipleChoiceQuestion();
@@ -204,7 +211,28 @@ async function loadQuestion() {
 
 // evaluate the answer
 function checkAnswer() {
+    feedbackArea.style.visibility = "visible";
 
+    let correctAnswer = null;
+    let answer = null;
+    if (user.mode === "multiple-choice") {
+        $("#mc-answers").prop("disabled", true);
+        answer = $('input[name="mc-answer"]:checked').val();
+        correctAnswer = currentCard.turkish;
+    } else {
+        fbAnswer.disabled = true;
+        answer = fbAnswer.value.trim();
+        correctAnswer = currentCard.turkish_blank.split("{{")[1].split("}}")[0];
+    }
+
+    const correct = answer === correctAnswer;
+
+    if (correct) {
+        $('#feedback-message').text("Correct!");
+    } else {
+        $('#feedback-message').html(`Incorrect. The correct answer is: <br /><span>${correctAnswer}</span>`);
+    }
+    
 }
 
 
@@ -325,6 +353,25 @@ function initialiseSettings() {
 
 }
 
+async function listenToSentence() {
+    try {
+        // retrieve the mp3 via web service
+        const audioBlob = await getTTS(currentCard.turkish);
+        // get the (temporary) URL to that audio
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        // create the "player"
+        const audio = new Audio(audioUrl);
+        await audio.play();
+
+        // delete the temporary URL when playback has finished to release the browser memory
+        audio.addEventListener("ended", () => {
+            URL.revokeObjectURL(audioUrl);
+        });
+    } catch {
+        alert("Reader not available.");
+    }
+} 
 
 function setupEventListeners() {
     $btnAction.on("click", handleAction);
@@ -332,6 +379,7 @@ function setupEventListeners() {
     selUnit.addEventListener("change", handleSettingsChange)
     $rbsMode.on("change", handleSettingsChange);
     fbAnswer.addEventListener("input", updateActionButton);
+    document.getElementById("fb-listen").addEventListener("click", listenToSentence);
     
 }
 
