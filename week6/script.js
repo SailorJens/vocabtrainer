@@ -233,7 +233,7 @@ function checkAnswer() {
     const correct = answer === correctAnswer;
 
     if (correct) {
-        $('#feedback-message').html('<i class="bi bi-check-circle text-success me-2"></i>That is correct!');
+        $('#feedback-message').html('<i class="bi bi-check-circle text-success me-2"></i>Correct!');
     } else {
         $('#feedback-message').html(`<i class="bi bi-x-circle text-danger me-2"></i>Incorrect. The correct answer is: <br /><span class="fw-semibold learning-content">${correctAnswer}</span>`);
     }
