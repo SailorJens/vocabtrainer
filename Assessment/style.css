@@ -89,8 +89,8 @@ input[type="radio"] {
     cursor: pointer;
 }
 
-/* don't allow a cursor when the elemnt is diabsled */
-/* I think Boostrap does that already, or even standard behaviour, but just to demonstrate how it works */
-input:disabled {
-    cursor: not-allowed;
+
+
+#listen-button:disabled {
+    cursor: wait;
 }

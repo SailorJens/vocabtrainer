@@ -439,6 +439,9 @@ function initialiseSettings() {
 }
 
 async function listenToSentence() {
+    const listenButton = document.getElementById("fb-listen");
+    listenButton.disabled = true;
+    listenButton.textContent = "Playing ...";
     try {
         // retrieve the mp3 via web service
         const audioBlob = await getTTS(currentCard.turkish);
@@ -455,7 +458,11 @@ async function listenToSentence() {
         });
     } catch {
         alert("Reader not available.");
+        listenButton.disabled = false;
+        listenButton.textContent = "🔊 Listen";
     }
+    listenButton.disabled = false;
+    listenButton.textContent = "🔊 Listen";
 } 
 
 function setupEventListeners() {
