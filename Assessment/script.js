@@ -38,7 +38,8 @@ async function getCard(unit) {
             id : 1,
             german : "Gibt es im Klassenzimmer Stühle?",
             turkish : "Sınıfta sandalyeler var mı?",
-            turkish_blank :  "Sınıfta {{sandalyeler}} var mı?"
+            turkish_blank :  "Sınıfta {{sandalyeler}} var mı?",
+                image_keywords : "Turkey cheese"
         }
     }
 
@@ -106,9 +107,12 @@ async function getBackgroundImage(imageKeywords) {
     const url =
         `https://commons.wikimedia.org/w/api.php?${params}`;
 
+    console.log(url);
+
     const response = await fetch(url);
 
     if (!response.ok) {
+        console.log("error")
         throw new Error(`Wikimedia request failed: ${response.status}`);
     }
 
@@ -132,7 +136,9 @@ async function getBackgroundImage(imageKeywords) {
     ];
 
     // return the thumbnail URL to avoid huge files
+    console.log(randomPage.imageinfo[0].thumburl);
     return randomPage.imageinfo[0].thumburl;
+    
 
 }
 
@@ -256,6 +262,23 @@ function displayFillBlankQuestion() {
 
 }
 
+async function updateBackgroundImage() {
+    try {
+        url = await getBackgroundImage(currentCard.image_keywords);
+        // if there are no results, simply don't display anything
+        if (url === null) {
+            return;
+        }
+    } catch {
+        // any issues, simply ignore and don't load a background
+        return;
+    }
+     
+    document.body.style.backgroundImage = `url("${url}")`;
+    console.log(document.body.style.backgroundImage);
+}
+
+
 // load a new question / card
 async function loadQuestion() {
     // hide feedback (blank it, keep space)
@@ -263,6 +286,12 @@ async function loadQuestion() {
     feedbackArea.style.visibility = "hidden";
   
     currentCard = await getCard(user.unit);
+    // on a big screen, display a background image
+    if (desktopMediaQuery.matches) {
+        console.log('matches screen size')
+        updateBackgroundImage();
+    }
+
     if (user.mode === "multiple-choice") {
         await displayMultipleChoiceQuestion();
     } else {
