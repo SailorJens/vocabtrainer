@@ -107,17 +107,17 @@ async function getBackgroundImage(imageKeywords) {
     const url =
         `https://commons.wikimedia.org/w/api.php?${params}`;
 
-    console.log(url);
-
     const response = await fetch(url);
 
     if (!response.ok) {
-        console.log("error")
-        throw new Error(`Wikimedia request failed: ${response.status}`);
+        // don't bother with throwing an error as we will simply not display a backgroundif it fails. 
+        return null;
     }
 
     const data = await response.json();
 
+    // create an array of pages with their values as dictionaries
+    // data.query.pages is possible as that's the JSON/object that comes back from wikimedia 
     const pages = Object.values(data.query.pages);
 
     // as there could technically be other media, I filter out the non-image ones
@@ -286,9 +286,11 @@ async function loadQuestion() {
     feedbackArea.style.visibility = "hidden";
   
     currentCard = await getCard(user.unit);
+
     // on a big screen, display a background image
     if (desktopMediaQuery.matches) {
-        console.log('matches screen size')
+        // I am not using await here so that the question display isn't held up
+        // the loading can happen in the background
         updateBackgroundImage();
     }
 

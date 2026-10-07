@@ -17,6 +17,23 @@ body {
     background-color: #f0f0f0;
 }
 
+#app-background-panel {
+    /* no card styling by default */
+}
+
+@media (min-width: 992px) {
+    #app-background-panel {
+        width: fit-content;
+        margin: 2rem auto;
+        padding: 1rem;
+        /* keep a bit of transarency for the image */
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border-radius: 0.75rem;
+        max-width: 72rem;
+    }
+}
+
 /*
 block is the dirction vertical to inline, which by default is left to right. So this is a margin at the bottom.
 */
