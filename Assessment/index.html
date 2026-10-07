@@ -45,7 +45,7 @@
                         <form id="new-user-form">
                             <p class="fw-semibold">Welcome to the vocabulary trainer!</p>
                             <label>What's your name?
-                                <input id="user-name" type="text" required />
+                                <input id="user-name" type="text" required aria-label="Your name" />
                             </label>
                         </form>
                     </div>
@@ -130,8 +130,8 @@
 
                 <section id="feedback-area" class="mt-4">
 
-                    <!-- feedback -->
-                    <p id="feedback-message" />
+                    <!-- feedback; for screen readers: Be polite! -->
+                    <p id="feedback-message" aria-live="polite" />
 
                 </section>
 

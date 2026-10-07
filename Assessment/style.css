@@ -17,16 +17,18 @@ body {
     background-color: #f0f0f0;
 }
 
+/* default = mobile and small screens */
+
 #app-background-panel {
     /* no card styling by default */
 }
 
-/* display search terms */
+/* don't display search keywords for image */
 #image-info {
     display: none;
 }
 
-
+/* better look on desktops by adding image backgrounds which requires this background */ 
 @media (min-width: 992px) {
     #app-background-panel {
         width: fit-content;
@@ -39,18 +41,16 @@ body {
         max-width: 72rem;
     }
 
+    /* use a combined selector: only apply when the "visible" class is present (added by JS) */
     #image-info.visible {
         display: block;
         position: fixed;
+        /* put the text in the bottom right */
         right: 1rem;
         bottom: 1rem;
-
         padding: 0.25rem 0.5rem;
-
         color: white;
-
         font-size: 0.75rem;
-        border-radius: 0.25rem;
     }
 }
 
@@ -81,4 +81,16 @@ small {
 
 #feedback-area {
     min-height: 4rem;
+}
+
+/* change the cursor style on radio buttons */
+/* I think Boostrap does that already, but just to demonstrate how this syntax works */
+input[type="radio"] {
+    cursor: pointer;
+}
+
+/* don't allow a cursor when the elemnt is diabsled */
+/* I think Boostrap does that already, or even standard behaviour, but just to demonstrate how it works */
+input:disabled {
+    cursor: not-allowed;
 }
