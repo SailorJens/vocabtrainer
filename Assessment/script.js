@@ -19,6 +19,10 @@ const instruction = document.getElementById("instruction");
 const sourceText = document.getElementById("source-text");
 const fbAnswer = document.getElementById("fb-answer");
 
+// check screen width (media)
+// (using 992px as it matches the bootstrap lg breakpoint)
+const desktopMediaQuery = window.matchMedia("(min-width: 992px)");
+
 // webservices
 
 // get a new card
@@ -78,6 +82,58 @@ async function getTTS(turkishText) {
     // create a mp3 in the browser memory with the audio
     const audioBlob = await response.blob();
     return audioBlob;
+}
+
+// get a background image for large screens
+// using the wikiMedia API
+// cf. https://www.mediawiki.org/wiki/API%3ATutorial/en
+async function getBackgroundImage(imageKeywords) {
+    const params = new URLSearchParams({
+        action: "query", // this is a query request (not updating etc.)
+        generator: "search", // this is a search query
+        gsrsearch: imageKeywords, // this is a search query with these keywords
+        gsrnamespace: "6",  // I'm searching on media files (file pages) (need to prefix with g because it is a generator, 
+                            // i.e. the results get enriched with more information (imaginfo))
+        gsrlimit: "10", // give me the 10 highest ranked ones
+        prop: "imageinfo", // include image informaton data
+                           // https://www.mediawiki.org/wiki/API%3AImageinfo/en 
+        iiprop: "url|mime",  // include urls from the imageinfo
+        iiurlwidth: "1600",  // include image width from the imaginfo
+        format: "json",  // return answer in json
+        origin: "*" // allows browser CORS request
+    });
+
+    const url =
+        `https://commons.wikimedia.org/w/api.php?${params}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error(`Wikimedia request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    const pages = Object.values(data.query.pages);
+
+    // as there could technically be other media, I filter out the non-image ones
+    const imagePages = pages.filter(page =>
+        page.imageinfo?.[0]?.mime?.startsWith("image/")
+    );
+
+    // in case ther aren't any images
+    if (imagePages.length === 0) {
+        return null;
+    }
+
+    // randomly select a page (= an image)
+    const randomPage = imagePages[
+        Math.floor(Math.random() * imagePages.length)
+    ];
+
+    // return the thumbnail URL to avoid huge files
+    return randomPage.imageinfo[0].thumburl;
+
 }
 
 
