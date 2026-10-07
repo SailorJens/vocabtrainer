@@ -83,13 +83,6 @@ small {
     min-height: 4rem;
 }
 
-/* change the cursor style on radio buttons */
-/* I think Boostrap does that already, but just to demonstrate how this syntax works */
-input[type="radio"] {
-    cursor: pointer;
-}
-
-
 
 #listen-button:disabled {
     cursor: wait;
