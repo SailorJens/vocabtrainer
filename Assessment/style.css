@@ -87,9 +87,3 @@ small {
 input[type="radio"] {
     cursor: pointer;
 }
-
-
-
-#listen-button:disabled {
-    cursor: wait;
-}
