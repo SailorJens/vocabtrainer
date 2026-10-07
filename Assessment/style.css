@@ -83,6 +83,12 @@ small {
     min-height: 4rem;
 }
 
+/* change the cursor style on radio buttons */
+input[type="radio"] {
+    cursor: pointer;
+}
+
+
 
 #listen-button:disabled {
     cursor: wait;
