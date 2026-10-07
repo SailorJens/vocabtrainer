@@ -275,7 +275,9 @@ async function updateBackgroundImage() {
     }
      
     document.body.style.backgroundImage = `url("${url}")`;
-    console.log(document.body.style.backgroundImage);
+    document.getElementById("image-search-term").textContent =  `Search: "${currentCard.image_keywords}"`;
+    document.getElementById("image-info").classList.add("visible");
+    
 }
 
 
