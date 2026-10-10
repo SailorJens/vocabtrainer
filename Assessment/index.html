@@ -31,7 +31,10 @@
     </head>
 
     <body>
+        <!-- The app background holds the images pulled from wikimedia and the credits. Only displayed on desktop.-->
         <div id="app-background-panel">
+
+            <!-- This is the actual app container. It's width is kept at max 30rem to give a compact user friedly appearance. -->
             <div class="container mt-0">
 
                 <header class="mb-4 p-3 text-light">
@@ -58,6 +61,9 @@
 
                 </section>
 
+
+                <!-- The settings area lets users select unit and exercise mode. 
+                    They are not in a form, because they are not submission data, but rather just setting parameters. -->
                 <section id="settings-area">
                     <!-- unit selector AND mode selector -->
                     <div id="unit-selector">
@@ -121,7 +127,7 @@
                                     <span id="fb-after">gestern nach Hause gegangen. Und ich muss das auch ein bisschen länger machen.</span>
                                 </p>
                                 <!-- button to listen for the sentence to help the user. -->
-                                <button type="button" id="fb-listen" class="btn btn-secondary btn-sm  ms-auto">🔊 Listen</button>
+                                <button type="button" id="fb-listen" class="btn btn-secondary btn-sm  ms-auto">🔈 Listen</button>
                             </div>
                         </form>
 
@@ -130,7 +136,7 @@
 
                 <section id="feedback-area" class="mt-4">
 
-                    <!-- feedback; for screen readers: Be polite! -->
+                    <!-- feedback; for screen readers: Be polite! In particular when the answer is incorrect -->
                     <p id="feedback-message" aria-live="polite" />
 
                 </section>
