@@ -61,94 +61,95 @@
 
                 </section>
 
+                <main>
+                    <!-- The settings area lets users select unit and exercise mode. 
+                        They are not in a form, because they are not submission data, but rather just setting parameters. -->
+                    <section id="settings-area">
+                        <!-- unit selector AND mode selector -->
+                        <div id="unit-selector">
 
-                <!-- The settings area lets users select unit and exercise mode. 
-                    They are not in a form, because they are not submission data, but rather just setting parameters. -->
-                <section id="settings-area">
-                    <!-- unit selector AND mode selector -->
-                    <div id="unit-selector">
+                            <label for="unit">
+                                You are currently learning unit
+                            </label>
 
-                        <label for="unit">
-                            You are currently learning unit
-                        </label>
+                            <select id="unit">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
 
-                        <select id="unit">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
-                    </div>
+                        <div id="mode-selector">
+                            <fieldset class="border rounded p-3 my-2">
+                                <legend class="small fst-italic text-secondary">Select an exercise mode</legend>
 
-                    <div id="mode-selector">
-                        <fieldset class="border rounded p-3 my-2">
-                            <legend class="small fst-italic text-secondary">Select an exercise mode</legend>
-
-                            <!-- Input is a void element, so I always need to put a label. -->  
-                            <!-- The name attributes tells the browser which options belong
-                            to the set that only one element can be selected from. -->   
-                            <div class="d-flex gap-3 align-items-center">
-                                <label class="form-check d-flex align-items-center gap-2">
-                                    <input class="form-check-input mt-0" type="radio" name="mode" value="multiple-choice" />
-                                    <span class="form-check-label">Multiple choice</span>
-                                </label>
-                                
-                                <label class="form-check d-flex align-items-center gap-2">
-                                    <input class="form-check-input mt-0" type="radio" name="mode"  value="fill-in-the-blank" />
-                                    <span class="form-check-label">Fill in the blank</span>
-                                </label>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                </section>
-
-                <main id="exercise-area" class="mt-4">
-
-                    <p id="instruction" class="fst-italic text-secondary" />
-
-                    <p id="source-text" class="learning-content" />
-
-                    <!-- multiple choice OR fill blank -->
-                    <div id="multiple-choice" class="learning-content" >
-                        <form>
-                            <fieldset>
-                                <div id="mc-answers"  class="d-flex flex-column gap-2  border rounded p-2" >
-                                    <!-- answers added by jQuery -->
+                                <!-- Input is a void element, so I always need to put a label. -->  
+                                <!-- The name attributes tells the browser which options belong
+                                to the set that only one element can be selected from. -->   
+                                <div class="d-flex gap-3 align-items-center">
+                                    <label class="form-check d-flex align-items-center gap-2">
+                                        <input class="form-check-input mt-0" type="radio" name="mode" value="multiple-choice" />
+                                        <span class="form-check-label">Multiple choice</span>
+                                    </label>
+                                    
+                                    <label class="form-check d-flex align-items-center gap-2">
+                                        <input class="form-check-input mt-0" type="radio" name="mode"  value="fill-in-the-blank" />
+                                        <span class="form-check-label">Fill in the blank</span>
+                                    </label>
                                 </div>
                             </fieldset>
-                        </form>
-                    </div>
+                        </div>
 
-                    <div id="fill-blank" >
-                        <form>
-                            <div class="d-flex flex-wrap align-items-center gap-2">
-                                <p class="mb-0 learning-content">
-                                    <span id="fb-before">ich</span>
-                                    <input type="text" id="fb-answer" aria-label="Missing word" class="mx-2">
-                                    <span id="fb-after">gestern nach Hause gegangen. Und ich muss das auch ein bisschen länger machen.</span>
-                                </p>
-                                <!-- button to listen for the sentence to help the user. -->
-                                <button type="button" id="fb-listen" class="btn btn-secondary  ms-auto d-inline-flex align-items-center gap-2"><i class="bi bi-volume-up fs-5"></i> Listen</button>
-                            </div>
-                        </form>
+                    </section>
 
+                    <section id="exercise-area" class="mt-4">
+
+                        <p id="instruction" class="fst-italic text-secondary" ></p>
+
+                        <p id="source-text" class="learning-content" ></p>
+
+                        <!-- multiple choice OR fill blank -->
+                        <div id="multiple-choice" class="learning-content" >
+                            <form>
+                                <fieldset>
+                                    <div id="mc-answers"  class="d-flex flex-column gap-2  border rounded p-2" >
+                                        <!-- answers added by jQuery -->
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+
+                        <div id="fill-blank" >
+                            <form>
+                                <div class="d-flex flex-wrap align-items-center gap-2">
+                                    <p class="mb-0 learning-content">
+                                        <span id="fb-before">ich</span>
+                                        <input type="text" id="fb-answer" aria-label="Missing word" class="mx-2">
+                                        <span id="fb-after">gestern nach Hause gegangen. Und ich muss das auch ein bisschen länger machen.</span>
+                                    </p>
+                                    <!-- button to listen for the sentence to help the user. -->
+                                    <button type="button" id="fb-listen" class="btn btn-secondary  ms-auto d-inline-flex align-items-center gap-2"><i class="bi bi-volume-up fs-5"></i> Listen</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </section>
+
+                    <section id="feedback-area" class="mt-4">
+
+                        <!-- feedback; for screen readers: Be polite! In particular when the answer is incorrect -->
+                        <p id="feedback-message" aria-live="polite" ></p>
+
+                    </section>
+
+                    <div id="action-area" class="d-flex justify-content-end">
+                        <!-- create new user / submit answer / next question: button used for all actions -->
+                        <!-- use display:flex and justify content to the end via bootstrap to move the button to the right-->
+                        <button id="action-button" class="btn btn-primary">
+                            <!-- generic bootstrap button styling -->
+                            Create User
+                        </button>
                     </div>
                 </main>
-
-                <section id="feedback-area" class="mt-4">
-
-                    <!-- feedback; for screen readers: Be polite! In particular when the answer is incorrect -->
-                    <p id="feedback-message" aria-live="polite" />
-
-                </section>
-
-                <div id="action-area" class="d-flex justify-content-end">
-                    <!-- create new user / submit answer / next question: button used for all actions -->
-                    <!-- use display:flex and justify content to the end via bootstrap to move the button to the right-->
-                    <button id="action-button" class="btn btn-primary">
-                        <!-- generic bootstrap button styling -->
-                        Create User
-                    </button>
-                </div>
 
             </div>
 
