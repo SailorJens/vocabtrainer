@@ -502,6 +502,9 @@ async function listenToSentence() {
     } catch (error) {
         console.error("Audio playback failed:", error);
         listenButton.innerHTML = '<i class="bi bi-volume-mute fs-5"></i> Audio not available.';
+        // show error for 2 second, then back to normal so user can try again
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        listenButton.innerHTML = '<i class="bi bi-volume-up fs-5"></i> Listen';
         listenButton.disabled = false;
     }
 
