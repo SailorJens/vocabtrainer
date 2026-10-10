@@ -476,7 +476,7 @@ function initialiseSettings() {
 async function listenToSentence() {
     const listenButton = document.getElementById("fb-listen");
     listenButton.disabled = true;
-    listenButton.textContent = "🔊 Loading ...";
+    listenButton.innerHTML = '<i class="bi bi-hourglass-split fs-5"></i> Loading ...';
     try {
         // retrieve the mp3 via web service
         const audioBlob = await getTTS(currentCard.turkish);
@@ -493,10 +493,10 @@ async function listenToSentence() {
             URL.revokeObjectURL(audioUrl);
         });
         listenButton.disabled = false;
-        listenButton.textContent = "🔈 Listen";
+        listenButton.innerHTML = '<i class="bi bi-volume-up fs-5"></i> Listen';
 
     } catch {
-        listenButton.textContent = "🔇 Audio not available";
+        listenButton.innerHTML = '<i class="bi bi-volume-mute fs-5"></i> Audio not available.';
  
     }
 
@@ -512,7 +512,7 @@ function addClickEventOnEnterKeyPressed(event) {
 }
 
 function setupEventListeners() {
-    // avoid a proper submit with page reload on Enter/Return in FB
+    // avoid a proper submit with page reload on Enter/Return in FB as we rather want to catch Enter in our own routine
     $("#fill-blank form").on("submit", function(event) {
         event.preventDefault();
     });
