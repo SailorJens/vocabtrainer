@@ -96,7 +96,7 @@ async function getBackgroundImage(imageKeywords) {
         generator: "search", // this is a search query
         gsrsearch: imageKeywords, // this is a search query with these keywords
         gsrnamespace: "6",  // I'm searching on media files (file pages) (need to prefix with g because it is a generator, 
-                            // i.e. the results get enriched with more information (imaginfo))
+                            // i.e. the results get enriched with more information (imageinfo))
         gsrlimit: "10", // give me the 10 highest ranked ones
         prop: "imageinfo", // include image informaton data
                            // https://www.mediawiki.org/wiki/API%3AImageinfo/en 
@@ -496,6 +496,7 @@ async function listenToSentence() {
         listenButton.innerHTML = '<i class="bi bi-volume-up fs-5"></i> Listen';
 
     } catch {
+        console.error("Audio playback failed:", error);
         listenButton.innerHTML = '<i class="bi bi-volume-mute fs-5"></i> Audio not available.';
  
     }
