@@ -82,6 +82,10 @@ async function getTTS(turkishText) {
         }
     );
 
+    if (!response.ok) {
+        throw new Error(`TTS request failed: HTTP ${response.status}`);
+    }
+
     // create a mp3 in the browser memory with the audio
     const audioBlob = await response.blob();
     return audioBlob;
@@ -495,10 +499,10 @@ async function listenToSentence() {
         listenButton.disabled = false;
         listenButton.innerHTML = '<i class="bi bi-volume-up fs-5"></i> Listen';
 
-    } catch {
+    } catch (error) {
         console.error("Audio playback failed:", error);
         listenButton.innerHTML = '<i class="bi bi-volume-mute fs-5"></i> Audio not available.';
- 
+        listenButton.disabled = false;
     }
 
 } 
