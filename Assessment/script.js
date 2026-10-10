@@ -530,6 +530,7 @@ function setupEventListeners() {
         event.target.focus();
     });
     // Ensure the action button works with Enter/Return for better UX and accessibility
+    // as keyobard testing revealed that it didn't work automatically. 
     $(document).on(
         'keydown', 
         'input[name="mc-answer"], #fb-answer',
