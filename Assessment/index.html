@@ -15,12 +15,12 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- My own stylesheet, I use fake versioning to force reload when I make changes by changing the url  -->
-        <link rel="stylesheet" href="style.css?v4">
+        <link rel="stylesheet" href="style.css?v7">
 
-        <!-- jQuery from Google CDN so it can use cached versions -->
+        <!-- jQuery from Google CDN  -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-        <!-- My own script, deferred to only load once the HTML DOM is loaded -->
+        <!-- My own script, deferred to only execute once the HTML DOM is loaded -->
         <script src="script.js" defer></script>
 
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
@@ -48,7 +48,7 @@
                         <form id="new-user-form">
                             <p class="fw-semibold">Welcome to the vocabulary trainer!</p>
                             <label>What's your name?
-                                <input id="user-name" type="text" required aria-label="Your name" />
+                                <input id="user-name" type="text" required placeholder="Your name" />
                             </label>
                         </form>
                     </div>

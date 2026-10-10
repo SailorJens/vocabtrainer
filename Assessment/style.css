@@ -19,10 +19,6 @@ body {
 
 /* default = mobile and small screens */
 
-#app-background-panel {
-    /* no card styling by default */
-}
-
 /* don't display search keywords for image */
 #image-info {
     display: none;
@@ -84,7 +80,15 @@ small {
     min-height: 4rem;
 }
 
-/* change the cursor style on radio buttons */
-input[type="radio"] {
+/* change the cursor style on radio buttons and the parent labels when they are not disabled */
+input[type="radio"]:not(:disabled),
+label:has(input[type="radio"]:not(:disabled)) {
     cursor: pointer;
+}
+
+/* remove the white shadow when the Next Question button is in focus with keyboard use */
+#action-button:focus,
+#action-button:focus-visible {
+    box-shadow: none;
+    outline: auto;
 }
