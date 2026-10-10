@@ -360,8 +360,8 @@ function checkAnswer() {
         $('#feedback-message').html(`<i class="bi bi-x-circle text-danger me-2"></i>Incorrect. The correct answer is: <br /><span class="fw-semibold learning-content">${correctAnswer}</span>`);
     }
 
-    // ensure "Return" key works to move to the next question for better UX and Accessibiilty
-  
+    // keyboard testing showed that focus needed to move to the action button after feedback,
+    // allowing users to continue with Enter without navigating through the controls again
     $btnAction.focus();
     
 }
@@ -520,7 +520,8 @@ function addClickEventOnEnterKeyPressed(event) {
 }
 
 function setupEventListeners() {
-    // avoid a proper submit with page reload on Enter/Return in FB as we rather want to catch Enter in our own routine
+    // Keyboard testing revealed that Enter triggered native form submission and reloaded the page. 
+    // Prevent this so Enter can be handled by the application's own keyboard handler
     $("#fill-blank form").on("submit", function(event) {
         event.preventDefault();
     });
