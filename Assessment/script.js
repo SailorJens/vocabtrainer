@@ -522,6 +522,9 @@ function addClickEventOnEnterKeyPressed(event) {
 function setupEventListeners() {
     // Keyboard testing revealed that Enter triggered native form submission and reloaded the page. 
     // Prevent this so Enter can be handled by the application's own keyboard handler
+    $("#fuser-name form").on("submit", function(event) {
+        event.preventDefault();
+    });
     $("#fill-blank form").on("submit", function(event) {
         event.preventDefault();
     });
