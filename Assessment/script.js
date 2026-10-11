@@ -256,6 +256,8 @@ async function displayMultipleChoiceQuestion() {
         'input[name="mc-answer"]',
         updateActionButton
     );
+    // keyboatd testing showed that the experience is better if selectin is focussed
+    $('input[name="mc-answer"]').first().trigger('focus');
 
 }
 
